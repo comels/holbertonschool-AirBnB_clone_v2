@@ -13,10 +13,10 @@ def do_pack():
     """ The function do_pack """
     local("mkdir -p versions")
     time = datetime.strftime(datetime.now(), "%Y%m%d%H%M%S")
-    file = f"versions/web_static_{time}.tgz"
+    file = "versions/web_static_{}.tgz".format(time)
 
     try:
-        local(f"tar -czvf {file} web_static")
+        local("tar -czvf {} web_static".format(file))
         return file
 
     except Exception:
