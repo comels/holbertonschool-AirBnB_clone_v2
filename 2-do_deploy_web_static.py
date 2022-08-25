@@ -8,6 +8,7 @@ from datetime import datetime
 from os.path import exists
 env.hosts = ['54.242.35.218', '50.16.118.128']
 
+
 def do_pack():
     """ The function do_pack """
     local("mkdir -p versions")
@@ -21,6 +22,7 @@ def do_pack():
     except Exception:
         return None
 
+
 def do_deploy(archive_path):
     """ The function do_deploy """
     if not exists(archive_path):
@@ -29,22 +31,24 @@ def do_deploy(archive_path):
         """archive_path = versions/web_static_20170315003959.tgz """
         file_name = archive_path.split("/")[-1]
         """file_name = web_static_20170315003959.tgz"""
-        file_with_no_ext = file_name.split(".")[0]
-        """file_with_no_ext = web_static_20170315003959"""
+        no_ext = file_name.split(".")[0]
+        """no_ext = web_static_20170315003959"""
         path = "/data/web_static/releases/"
         """Upload the archive to the /tmp/ directory of the web server"""
         put(archive_path, '/tmp/')
-        run('mkdir -p {}{}/'.format(path, file_with_no_ext))
+        run('mkdir -p {}{}/'.format(path, no_ext))
         """Uncompress the archive"""
-        run('tar -xzf /tmp/{} -C {}{}/'.format(file_name, path, file_with_no_ext))
+        run('tar -xzf /tmp/{} -C {}{}/'.format(file_name, path, no_ext))
         run('rm /tmp/{}'.format(file_name))
-        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, file_with_no_ext))
-        run('rm -rf {}{}/web_static'.format(path, file_with_no_ext))
+        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, no_ext))
+        run('rm -rf {}{}/web_static'.format(path, no_ext))
         run('rm -rf /data/web_static/current')
-        run('ln -s {}{}/ /data/web_static/current'.format(path, file_with_no_ext))
+        run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
         return True
     except Exception:
         return False
 
 
-        """fab -f 2-do_deploy_web_static.py do_deploy:archive_path=versions/web_static_20220824140539.tgz -i /home/vagrant/.ssh/school -u ubuntu"""
+"""fab -f 2-do_deploy_web_static.py do_deploy:
+archive_path=versions/web_static_20220824140539.tgz
+-i /home/vagrant/.ssh/school -u ubuntu"""
