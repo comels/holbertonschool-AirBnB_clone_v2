@@ -8,6 +8,7 @@ from datetime import datetime
 from os.path import exists
 env.hosts = ['54.242.35.218', '50.16.118.128']
 
+
 def do_pack():
     """ The function do_pack """
     local("mkdir -p versions")
@@ -20,6 +21,7 @@ def do_pack():
 
     except Exception:
         return None
+
 
 def do_deploy(archive_path):
     """ The function do_deploy """
@@ -48,7 +50,11 @@ def do_deploy(archive_path):
         return False
 
 
-    """fab -f 2-do_deploy_web_static.py do_deploy:archive_path=versions/web_static_20220824140539.tgz -i /home/vagrant/.ssh/school -u ubuntu"""
+"""fab -f 2-do_deploy_web_static.py do_deploy:
+archive_path=versions/web_static_20220824140539.tgz -i
+/home/vagrant/.ssh/school -u ubuntu"""
+
+
 def deploy():
     """the function deploy"""
     archive = do_pack()
@@ -56,4 +62,6 @@ def deploy():
         return False
     return do_deploy(archive)
 
-    """fab -f 3-deploy_web_static.py deploy -i /home/vagrant/.ssh/school -u ubuntu"""
+
+"""fab -f 3-deploy_web_static.py deploy -i
+/home/vagrant/.ssh/school -u ubuntu"""
