@@ -15,11 +15,11 @@ def teardown_db(exception):
     storage.close()
 
 
-@app.route('/states_list', strict_slashes=False)
-def states():
+@app.route('/cities_by_states', strict_slashes=False)
+def cities():
     ''' Function that return list of all states '''
     all_states = storage.all(State).values()
-    return render_template('7-states_list.html', all_states=all_states)
+    return render_template('8-cities_by_states.html', all_states=all_states)
 
 
 if __name__ == '__main__':
